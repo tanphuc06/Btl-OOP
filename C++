@@ -1,1 +1,160 @@
-
+#include<iostream>
+using namespace std;
+void doanhThu(){
+     int luachon;
+    while(1){
+        cout<<"4.1 Tổng doanh thu trong ngày."<<endl;
+        cout<<"4.2 Tổng doanh thu trong tuần."<<endl;
+        cout<<"4.3 Tổng doanh thu trong tháng."<<endl;
+        cout<<"0. Quay lại."<<endl;
+        cout<<"Chọn chức năng: "<<endl;
+        cin>>luachon;
+    switch(luachon){
+        case 1:
+        break;
+        case 2:
+        break;
+        case 3:
+        break;
+        case 0:
+        return ;
+    }
+    }
+}
+void ve(){
+    int luachon;
+    while(1){
+        cout<<"3.1 Bán vé."<<endl;
+        cout<<"3.2 In vé."<<endl;
+        cout<<"0. Quay lại."<<endl;
+        cout<<"Chọn chức năng: "<<endl;
+        cin>>luachon;
+    switch(luachon){
+        case 1:
+        break;
+        case 2:
+        break;
+        case 0:
+        return ;
+    }
+    }
+}
+void xuatChieu(){
+    int luachon;
+    while(1){
+        cout<<"2.1 Nhập xuất chiếu."<<endl;
+        cout<<"2.2 Xóa xuất chiếu."<<endl;
+        cout<<"2.3 Xem danh sách các xuất chiếu."<<endl;
+        cout<<"0. Quay lại."<<endl;
+        cout<<"Chọn chức năng: "<<endl;
+        cin>>luachon;
+    switch(luachon){
+        case 1:
+        break;
+        case 2:
+        break;
+        case 3:
+        break;
+        case 0:
+        return ;
+    }
+    }
+}
+void sapChieu(){
+    int luachon;
+    while(1){
+        cout<<"1.1.1 Thêm phim vào danh sách."<<endl;
+        cout<<"1.1.2 Xóa phim khỏi danh sách."<<endl;
+        cout<<"1.1.3 Tìm phim."<<endl;
+        cout<<"1.1.4 Xem danh sách."<<endl;
+        cout<<"1.1.5 Chuyển phim vào danh sách đang chiếu."<<endl;
+        cout<<"0. Quay lại."<<endl;
+        cout<<"Chọn chức năng: "<<endl;
+        cin>>luachon;
+    switch(luachon){
+        case 1:
+        break;
+        case 2:
+        break;
+        case 3:
+        break;
+        case 4:
+        break;
+        case 0:
+        return ;
+    }
+    }
+}
+void dangChieu(){
+    int luachon;
+    while(1){
+        cout<<"1.1.1 Thêm phim vào danh sách."<<endl;
+        cout<<"1.1.2 Xóa phim khỏi danh sách."<<endl;
+        cout<<"1.1.3 Tìm phim."<<endl;
+        cout<<"1.1.4 Xem danh sách."<<endl;
+        cout<<"0. Quay lại."<<endl;
+        cout<<"Chọn chức năng: "<<endl;
+        cin>>luachon;
+    switch(luachon){
+        case 1:
+        break;
+        case 2:
+        break;
+        case 3:
+        break;
+        case 4:
+        break;
+        case 0:
+        return ;
+    }
+    }
+}
+void danhSachPhim(){
+    int luachon;
+    while(1){
+        cout<<"1.1 Danh sách phim đang chiếu."<<endl;
+        cout<<"1.2 Danh sách phim sắp chiếu."<<endl;
+        cout<<"0. Quay lại."<<endl;
+        cout<<"Chọn chức năng: "<<endl;
+        cin>>luachon;
+    switch(luachon){
+        case 1:
+        dangChieu();
+        break;
+        case 2:
+        sapChieu();
+        break;
+        case 0:
+        return ;
+    }
+    }
+}
+int main(){
+    int luachon;
+    while(1){
+        cout<<"Quản lý rạp chiếu phim"<<endl;
+        cout<<"1. Quản lý danh sách phim."<<endl;
+        cout<<"2. Quản lý xuất chiếu."<<endl;
+        cout<<"3. Quản lý vé."<<endl;
+        cout<<"4. Tổng doanh thu."<<endl;
+        cout<<"0. Thoát."<<endl;
+        cout<<"Chọn chức năng: "<<endl;
+        cin>>luachon;
+    switch(luachon){
+        case 1:
+        danhSachPhim();
+        break;
+        case 2:
+        xuatChieu();
+        break;
+        case 3:
+        ve();
+        break;
+        case 4:
+        doanhThu();
+        break;
+        case 0:
+        return 0;
+    }
+    }
+}
