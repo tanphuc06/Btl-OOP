@@ -1,5 +1,45 @@
 #include<iostream>
+#include "danhSachPhim.h"
 using namespace std;
+/*class danhSachPhim{
+    private:
+    string maPhim;
+    string tenPhim;
+    string daoDien;
+    string theLoai;
+    int thoiLuong;
+    string khoiChieu;
+    string ngonNgu;
+    public:
+    danhSachPhim();
+    string getMaPhim;
+    string getTenPhim;
+    string getDaoDien;
+    string getTheLoai;
+    int getThoiLuong;
+    string getKhoiChieu;
+    string getNgonNgu;
+    void setMaPhim;
+    void setTenPhim;
+    void setDaoDien;
+    void setTheLoai;
+    void setThoiLuong;
+    void setKhoiChieu;
+    void setNgonNgu;
+    void themPhim();
+    void xoaPhim();
+    void timKiem();
+    void xuatPhim();
+}
+danhSachPhim::danhSachPhim(){
+    maPhim="";
+    tenPhim="";
+    daoDien="";
+    theLoai="";
+    thoiLuong=0;
+    khoiChieu="";
+    ngonNgu="";
+}*/
 void doanhThu(){
      int luachon;
     while(1){
@@ -86,6 +126,7 @@ void sapChieu(){
     }
 }
 void dangChieu(){
+    danhSachPhim a;
     int luachon;
     while(1){
         cout<<"1.1.1 Thêm phim vào danh sách."<<endl;
@@ -97,6 +138,7 @@ void dangChieu(){
         cin>>luachon;
     switch(luachon){
         case 1:
+        a.themPhim();
         break;
         case 2:
         break;
@@ -109,7 +151,7 @@ void dangChieu(){
     }
     }
 }
-void danhSachPhim(){
+void qlDanhSachPhim(){
     int luachon;
     while(1){
         cout<<"1.1 Danh sách phim đang chiếu."<<endl;
@@ -142,7 +184,7 @@ int main(){
         cin>>luachon;
     switch(luachon){
         case 1:
-        danhSachPhim();
+        qlDanhSachPhim();
         break;
         case 2:
         xuatChieu();
