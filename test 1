@@ -1,0 +1,293 @@
+#include<iostream>
+#include <iomanip>
+using namespace std;
+class danhSachPhim{
+    private:
+    string maPhim;
+    string tenPhim;
+    string daoDien;
+    string theLoai;
+    int thoiLuong;
+    string khoiChieu;
+    string ngonNgu;
+    public:
+    danhSachPhim();
+    
+    string getMaPhim();
+    string getTenPhim();
+    string getDaoDien();
+    string getTheLoai();
+    int getThoiLuong();
+    string getKhoiChieu();
+    string getNgonNgu();
+    
+    void setMaPhim(const string &ma);
+    void setTenPhim(const string &ten);
+    void setDaoDien(const string &daodien);
+    void setTheLoai(const string &tl);
+    void setThoiLuong(int thoiluong);
+    void setKhoiChieu(const string &khoichieu);
+    void setNgonNgu(const string &ngongu);
+    void themPhim();
+    void xoaPhim();
+    void timKiem();
+    void xuatPhim();
+};
+danhSachPhim::danhSachPhim(){
+    maPhim="";
+    tenPhim="";
+    daoDien="";
+    theLoai="";
+    thoiLuong=0;
+    khoiChieu="";
+    ngonNgu="";}
+    string danhSachPhim::getMaPhim(){
+        return maPhim;
+    }
+    string danhSachPhim::getTenPhim(){
+        return tenPhim;
+    }
+    string danhSachPhim::getDaoDien(){
+        return daoDien;
+    }
+    string danhSachPhim::getTheLoai(){
+        return theLoai;
+    }
+    int danhSachPhim::getThoiLuong(){
+        return thoiLuong;
+    }
+    string danhSachPhim::getKhoiChieu(){
+        return khoiChieu;
+    }
+    string danhSachPhim::getNgonNgu(){
+        return ngonNgu;
+    }
+    
+    void danhSachPhim::setMaPhim(const string &ma){
+        maPhim=ma;
+    }
+    void danhSachPhim::setTenPhim(const string &ten){
+        tenPhim=ten;
+    }
+    void danhSachPhim::setDaoDien(const string &daodien){
+        daoDien=daodien;
+    }
+    void danhSachPhim::setTheLoai(const string &tl){
+        theLoai=tl;
+    }
+    void danhSachPhim::setThoiLuong(int thoiluong){
+        thoiLuong=thoiluong;
+    }
+    void danhSachPhim::setKhoiChieu(const string &khoichieu){
+        khoiChieu=khoichieu;
+    }
+    void danhSachPhim::setNgonNgu(const string &ngonngu){
+        ngonNgu=ngonngu;
+    }
+    void danhSachPhim::themPhim(){
+        cout<<"Nhập mã phim: ";
+        getline(cin,maPhim);
+        cout<<"Nhập tên phim: ";
+        getline(cin,tenPhim);
+        cout<<"Nhập đạo diễn: ";
+        getline(cin,daoDien);
+        cout<<"Nhập thể loại: ";
+        getline(cin,theLoai);
+        cout<<"Nhập thời lượng: ";
+        cin >> thoiLuong;
+        cin.ignore();
+        cout<<"Nhập khởi chiếu: ";
+        getline(cin,khoiChieu);
+        cout<<"Nhập ngôn ngữ: ";
+        getline(cin,ngonNgu);
+    }
+    void danhSachPhim::xoaPhim(){
+        
+    }
+    void danhSachPhim::timKiem(){
+        
+    }
+    void danhSachPhim::xuatPhim() {
+    // In tiêu đề bảng với độ rộng cố định
+    cout << left  // căn trái cho đẹp
+         << setw(10) << "Mã phim" 
+         << setw(15) << "Tên phim"
+         << setw(15) << "Đạo diễn"
+         << setw(10) << "Thể loại"
+         << setw(10) << "Thời lượng"
+         << setw(15) << "Khởi chiếu"
+         << setw(10) << "Ngôn ngữ"
+         << endl;
+    cout << left
+         << setw(10) << maPhim
+         << setw(15) << tenPhim
+         << setw(15) << daoDien
+         << setw(10) << theLoai
+         << setw(8) << thoiLuong
+         << setw(10) << khoiChieu
+         << setw(10) << ngonNgu
+         << endl;
+}
+
+void doanhThu(){
+     int luachon;
+    while(1){
+        cout<<"4.1 Tổng doanh thu trong ngày."<<endl;
+        cout<<"4.2 Tổng doanh thu trong tuần."<<endl;
+        cout<<"4.3 Tổng doanh thu trong tháng."<<endl;
+        cout<<"0. Quay lại."<<endl;
+        cout<<"Chọn chức năng: "<<endl;
+        cin>>luachon;
+    switch(luachon){
+        case 1:
+        break;
+        case 2:
+        break;
+        case 3:
+        break;
+        case 0:
+        return ;
+    }
+    }
+}
+void ve(){
+    int luachon;
+    while(1){
+        cout<<"3.1 Bán vé."<<endl;
+        cout<<"3.2 In vé."<<endl;
+        cout<<"0. Quay lại."<<endl;
+        cout<<"Chọn chức năng: "<<endl;
+        cin>>luachon;
+    switch(luachon){
+        case 1:
+        break;
+        case 2:
+        break;
+        case 0:
+        return ;
+    }
+    }
+}
+void xuatChieu(){
+    int luachon;
+    while(1){
+        cout<<"2.1 Nhập xuất chiếu."<<endl;
+        cout<<"2.2 Xóa xuất chiếu."<<endl;
+        cout<<"2.3 Xem danh sách các xuất chiếu."<<endl;
+        cout<<"0. Quay lại."<<endl;
+        cout<<"Chọn chức năng: "<<endl;
+        cin>>luachon;
+    switch(luachon){
+        case 1:
+        break;
+        case 2:
+        break;
+        case 3:
+        break;
+        case 0:
+        return ;
+    }
+    }
+}
+void sapChieu(){
+    int luachon;
+    while(1){
+        cout<<"1.1.1 Thêm phim vào danh sách."<<endl;
+        cout<<"1.1.2 Xóa phim khỏi danh sách."<<endl;
+        cout<<"1.1.3 Tìm phim."<<endl;
+        cout<<"1.1.4 Xem danh sách."<<endl;
+        cout<<"1.1.5 Chuyển phim vào danh sách đang chiếu."<<endl;
+        cout<<"0. Quay lại."<<endl;
+        cout<<"Chọn chức năng: "<<endl;
+        cin>>luachon;
+    switch(luachon){
+        case 1:
+        break;
+        case 2:
+        break;
+        case 3:
+        break;
+        case 4:
+        break;
+        case 0:
+        return ;
+    }
+    }
+}
+void dangChieu(){
+    danhSachPhim a;
+    int luachon;
+    while(1){
+        cout<<"1.1.1 Thêm phim vào danh sách."<<endl;
+        cout<<"1.1.2 Xóa phim khỏi danh sách."<<endl;
+        cout<<"1.1.3 Tìm phim."<<endl;
+        cout<<"1.1.4 Xem danh sách."<<endl;
+        cout<<"0. Quay lại."<<endl;
+        cout<<"Chọn chức năng: "<<endl;
+        cin>>luachon;
+    switch(luachon){
+        case 1:
+        cin.ignore();
+        a.themPhim();
+        break;
+        case 2:
+        break;
+        case 3:
+        break;
+        case 4:
+        a.xuatPhim();
+        break;
+        case 0:
+        return ;
+    }
+    }
+}
+void qlDanhSachPhim(){
+    int luachon;
+    while(1){
+        cout<<"1.1 Danh sách phim đang chiếu."<<endl;
+        cout<<"1.2 Danh sách phim sắp chiếu."<<endl;
+        cout<<"0. Quay lại."<<endl;
+        cout<<"Chọn chức năng: "<<endl;
+        cin>>luachon;
+    switch(luachon){
+        case 1:
+        dangChieu();
+        break;
+        case 2:
+        sapChieu();
+        break;
+        case 0:
+        return ;
+    }
+    }
+}
+int main(){
+    int luachon;
+    while(1){
+        cout<<"Quản lý rạp chiếu phim"<<endl;
+        cout<<"1. Quản lý danh sách phim."<<endl;
+        cout<<"2. Quản lý xuất chiếu."<<endl;
+        cout<<"3. Quản lý vé."<<endl;
+        cout<<"4. Tổng doanh thu."<<endl;
+        cout<<"0. Thoát."<<endl;
+        cout<<"Chọn chức năng: "<<endl;
+        cin>>luachon;
+    switch(luachon){
+        case 1:
+        qlDanhSachPhim();
+        break;
+        case 2:
+        xuatChieu();
+        break;
+        case 3:
+        ve();
+        break;
+        case 4:
+        doanhThu();
+        break;
+        case 0:
+        return 0;
+    }
+    }
+}
