@@ -1,0 +1,219 @@
+#include <iostream>
+#include <string>
+#include <iomanip>
+using namespace std;
+
+// ------------------ LỚP DANH SÁCH PHIM (1 PHIM) ------------------
+class danhSachPhim {
+private:
+    string maPhim;
+    string tenPhim;
+    string daoDien;
+    string theLoai;
+    int thoiLuong;
+    string khoiChieu;
+    string ngonNgu;
+
+public:
+    danhSachPhim() : thoiLuong(0) {}
+
+    // Getter
+    string getMaPhim() const { return maPhim; }
+    string getTenPhim() const { return tenPhim; }
+    string getDaoDien() const { return daoDien; }
+    string getTheLoai() const { return theLoai; }
+    int getThoiLuong() const { return thoiLuong; }
+    string getKhoiChieu() const { return khoiChieu; }
+    string getNgonNgu() const { return ngonNgu; }
+
+    // Setter
+    void setMaPhim(const string &ma) { maPhim = ma; }
+    void setTenPhim(const string &ten) { tenPhim = ten; }
+    void setDaoDien(const string &dd) { daoDien = dd; }
+    void setTheLoai(const string &tl) { theLoai = tl; }
+    void setThoiLuong(int tl) { thoiLuong = tl; }
+    void setKhoiChieu(const string &kc) { khoiChieu = kc; }
+    void setNgonNgu(const string &nn) { ngonNgu = nn; }
+
+    // Nhập thông tin phim
+    void nhapPhim() {
+        cout << "Nhap ma phim: "; getline(cin, maPhim);
+        cout << "Nhap ten phim: "; getline(cin, tenPhim);
+        cout << "Nhap dao dien: "; getline(cin, daoDien);
+        cout << "Nhap the loai: "; getline(cin, theLoai);
+        cout << "Nhap thoi luong (phut): "; cin >> thoiLuong;
+        cin.ignore();
+        cout << "Nhap ngay khoi chieu: "; getline(cin, khoiChieu);
+        cout << "Nhap ngon ngu: "; getline(cin, ngonNgu);
+    }
+
+    // Xuất thông tin phim theo bảng
+    void xuatPhim() const {
+        cout << left
+             << setw(10) << maPhim
+             << setw(25) << tenPhim
+             << setw(20) << daoDien
+             << setw(15) << theLoai
+             << setw(10) << thoiLuong
+             << setw(15) << khoiChieu
+             << setw(10) << ngonNgu
+             << endl;
+    }
+
+    // In tiêu đề bảng
+    static void inTieuDe() {
+        cout << left
+             << setw(10) << "Ma phim"
+             << setw(25) << "Ten phim"
+             << setw(20) << "Dao dien"
+             << setw(15) << "The loai"
+             << setw(10) << "Thoi luong"
+             << setw(15) << "Khoi chieu"
+             << setw(10) << "Ngon ngu"
+             << endl;
+        cout << string(105, '-') << endl;
+    }
+};
+
+// ------------------ NODE DANH SÁCH LIÊN KẾT ------------------
+struct Node {
+    danhSachPhim data;
+    Node* next;
+    Node(const danhSachPhim &p) : data(p), next(nullptr) {}
+};
+
+// ------------------ LỚP DANH SÁCH LIÊN KẾT ------------------
+class danhSachPhimList {
+private:
+    Node* head;
+
+public:
+    danhSachPhimList() : head(nullptr) {}
+    ~danhSachPhimList() {
+        while (head) {
+            Node* temp = head;
+            head = head->next;
+            delete temp;
+        }
+    }
+
+    // Thêm phim vào cuối danh sách
+    void themPhim() {
+        danhSachPhim p;
+        cin.ignore();
+        p.nhapPhim();
+
+        Node* newNode = new Node(p);
+        if (!head) head = newNode;
+        else {
+            Node* temp = head;
+            while (temp->next) temp = temp->next;
+            temp->next = newNode;
+        }
+        cout << "Da them phim vao danh sach!\n";
+    }
+
+    // Xóa phim theo mã
+    void xoaPhim(const string &maPhim) {
+        if (!head) return;
+
+        if (head->data.getMaPhim() == maPhim) {
+            Node* temp = head;
+            head = head->next;
+            delete temp;
+            cout << "Da xoa phim co ma: " << maPhim << endl;
+            return;
+        }
+
+        Node* prev = head;
+        Node* curr = head->next;
+        while (curr && curr->data.getMaPhim() != maPhim) {
+            prev = curr;
+            curr = curr->next;
+        }
+
+        if (curr) {
+            prev->next = curr->next;
+            delete curr;
+            cout << "Da xoa phim co ma: " << maPhim << endl;
+        } else {
+            cout << "Khong tim thay phim co ma " << maPhim << endl;
+        }
+    }
+
+    // Tìm kiếm phim theo mã
+    Node* timKiem(const string &maPhim) {
+        Node* temp = head;
+        while (temp) {
+            if (temp->data.getMaPhim() == maPhim)
+                return temp;
+            temp = temp->next;
+        }
+        return nullptr;
+    }
+
+    // Xuất toàn bộ danh sách theo bảng
+    void xuatDanhSach() const {
+        if (!head) {
+            cout << "Danh sach phim rong!\n";
+            return;
+        }
+        danhSachPhim::inTieuDe();
+        Node* temp = head;
+        while (temp) {
+            temp->data.xuatPhim();
+            temp = temp->next;
+        }
+    }
+};
+
+// ------------------ HÀM MAIN ------------------
+int main() {
+    danhSachPhimList ds;
+    int choice;
+    string ma;
+
+    do {
+        cout << "\n===== QUAN LY DANH SACH PHIM =====\n";
+        cout << "1. Them phim\n";
+        cout << "2. Xuat danh sach phim\n";
+        cout << "3. Tim phim theo ma\n";
+        cout << "4. Xoa phim theo ma\n";
+        cout << "0. Thoat\n";
+        cout << "Chon: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                ds.themPhim();
+                break;
+            case 2:
+                ds.xuatDanhSach();
+                break;
+            case 3:
+                cin.ignore();
+                cout << "Nhap ma phim can tim: ";
+                getline(cin, ma);
+                if (ds.timKiem(ma)) {
+                    danhSachPhim::inTieuDe();
+                    ds.timKiem(ma)->data.xuatPhim();
+                } else
+                    cout << "Khong tim thay phim!\n";
+                break;
+            case 4:
+                cin.ignore();
+                cout << "Nhap ma phim can xoa: ";
+                getline(cin, ma);
+                ds.xoaPhim(ma);
+                break;
+            case 0:
+                cout << "Thoat chuong trinh.\n";
+                break;
+            default:
+                cout << "Lua chon khong hop le!\n";
+                break;
+        }
+    } while (choice != 0);
+
+    return 0;
+}
