@@ -1,45 +1,196 @@
 #include<iostream>
-#include "danhSachPhim.h"
+#include <string>
+#include <iomanip>
 using namespace std;
-/*class danhSachPhim{
-    private:
+//danhSachPhimList sc; 
+//danhSachPhimList dc;
+class danhSachPhim {
+private:
     string maPhim;
     string tenPhim;
     string daoDien;
     string theLoai;
     int thoiLuong;
     string khoiChieu;
-    string ngonNgu;
-    public:
-    danhSachPhim();
-    string getMaPhim;
-    string getTenPhim;
-    string getDaoDien;
-    string getTheLoai;
-    int getThoiLuong;
-    string getKhoiChieu;
-    string getNgonNgu;
-    void setMaPhim;
-    void setTenPhim;
-    void setDaoDien;
-    void setTheLoai;
-    void setThoiLuong;
-    void setKhoiChieu;
-    void setNgonNgu;
-    void themPhim();
-    void xoaPhim();
-    void timKiem();
-    void xuatPhim();
+
+public:
+    danhSachPhim() : thoiLuong(0) {}
+
+ 
+    string getMaPhim() const { return maPhim; }
+    string getTenPhim() const { return tenPhim; }
+    string getDaoDien() const { return daoDien; }
+    string getTheLoai() const { return theLoai; }
+    int getThoiLuong() const { return thoiLuong; }
+    string getKhoiChieu() const { return khoiChieu; }
+ 
+    void setMaPhim(const string &ma) { maPhim = ma; }
+    void setTenPhim(const string &ten) { tenPhim = ten; }
+    void setDaoDien(const string &dd) { daoDien = dd; }
+    void setTheLoai(const string &tl) { theLoai = tl; }
+    void setThoiLuong(int tl) { thoiLuong = tl; }
+    void setKhoiChieu(const string &kc) { khoiChieu = kc; }
+    
+    void nhapPhim() {
+        cout << "Nhập mã phim: "; getline(cin, maPhim);
+        cout << "Nhập tên phim: "; getline(cin, tenPhim);
+        cout << "Nhập đạo diễn: "; getline(cin, daoDien);
+        cout << "Nhập thể loại: "; getline(cin, theLoai);
+        cout << "Nhập thời lượng (phút): "; cin >> thoiLuong;
+        cin.ignore();
+        cout << "Nhập ngày khởi chiếu: "; getline(cin, khoiChieu);
+  
+    }
+
+    void xuatPhim() const {
+        cout << left
+             << setw(9) << maPhim
+             << setw(17) << tenPhim
+             << setw(18) << daoDien
+             << setw(13) << theLoai
+             << setw(10) << thoiLuong
+             << setw(10) << khoiChieu
+           
+             << endl;
+    }
+
+    static void inTieuDe() {
+        cout << left
+             << setw(10) << "Mã phim"
+             << setw(18) << "Tên phim"
+             << setw(18) << "Đạo diễn"
+             << setw(15) << "Thể loại"
+             << setw(15) << "Thời lượng"
+             << setw(10) << "   Khởi chiếu"
+            
+             << endl;
+
+    }
+};
+
+struct Node {
+    danhSachPhim data;
+    Node* next;
+    Node(const danhSachPhim &p){
+        data=p;
+        next=NULL;
+    }
+};
+
+
+class danhSachPhimList {
+private:
+    Node* head;
+
+public:
+    danhSachPhimList() {
+        head=NULL;}
+    ~danhSachPhimList() {
+        while (head) {
+            Node* temp = head;
+            head = head->next;
+            delete temp;
+        }
+    }
+
+
+    void themPhim() {
+        danhSachPhim p;
+        cin.ignore();
+        p.nhapPhim();
+
+        Node* newNode = new Node(p);
+        if (head==NULL) {
+            head = newNode;
+        }
+        else {
+            Node* temp = head;
+            while (temp->next!=NULL) {
+                temp = temp->next;}
+            temp->next = newNode;
+        }
+        cout << "Đã thêm phim vào danh sách!\n";
+    }
+
+    void xoaPhim(const string &maPhim) {
+        if (head==NULL) return;
+
+        if (head->data.getMaPhim() == maPhim) {
+            Node* temp = head;
+            head = head->next;
+            delete temp;
+            cout << "Đã xóa phim có mã: " << maPhim << endl;
+            return;
+        }
+
+       Node* prev = head;        
+       Node* curr = head->next;    
+       while (curr != NULL && curr->data.getMaPhim() != maPhim) {
+        prev = curr;            
+        curr = curr->next;      
+    }
+
+    if (curr != NULL) {
+        prev->next = curr->next; 
+        delete curr;             
+        cout << "Đã xóa phim có mã: " << maPhim << endl;
+    } 
+    else {
+        cout << "Không tìm thấy phim có mã " << maPhim << endl;
+    }
 }
-danhSachPhim::danhSachPhim(){
-    maPhim="";
-    tenPhim="";
-    daoDien="";
-    theLoai="";
-    thoiLuong=0;
-    khoiChieu="";
-    ngonNgu="";
-}*/
+
+    Node* timKiem(const string &maPhim) {
+        Node* temp = head;
+        while (temp !=NULL) {
+            if (temp->data.getMaPhim() == maPhim)
+                return temp;
+            temp = temp->next;
+        }
+        return NULL;
+    }
+
+    void xuatDanhSach() const {
+        if (head==NULL) {
+            cout << "Danh sách phim rỗng!\n";
+            return;
+        }
+        danhSachPhim::inTieuDe();
+        Node* temp = head;
+        while (temp) {
+            temp->data.xuatPhim();
+            temp = temp->next;
+        }
+    }
+};
+    void themPhimTuDanhSachKhac(const danhSachPhim &p) {
+    Node* newNode = new Node(p);
+    if (head == NULL) {
+        head = newNode;
+    } else {
+        Node* temp = head;
+        while (temp->next != NULL) {
+            temp = temp->next;
+        }
+        temp->next = newNode;
+    }
+    cout << "Đã thêm phim vào danh sách!\n";
+}
+
+    void chuyenPhim(const string &maPhim){
+        Node* nodeTim = sc.timKiem(maPhim); 
+    if (nodeTim != NULL) {
+        dc.themPhimTuDanhSachKhac(nodeTim->data);
+        sc.xoaPhim(maPhim);
+
+        cout << "Đã chuyển phim " << nodeTim->data.getTenPhim() << " sang danh sách đang chiếu.\n";
+    } else {
+        cout << "Không tìm thấy phim có mã " << maPhim << " trong danh sách sắp chiếu.\n";
+    }
+    }
+
+danhSachPhimList sc; 
+danhSachPhimList dc;
 void doanhThu(){
      int luachon;
     while(1){
@@ -57,10 +208,15 @@ void doanhThu(){
         case 3:
         break;
         case 0:
+        cout << "Thoát chương trình.\n";
+        break;
+        default:
+            cout << "Lựa chọn không hợp lệ!\n";
+            break;
+        }
+    } while (luachon != 0);
         return ;
     }
-    }
-}
 void ve(){
     int luachon;
     while(1){
@@ -75,10 +231,15 @@ void ve(){
         case 2:
         break;
         case 0:
+        cout << "Thoát chương trình.\n";
+        break;
+        default:
+            cout << "Lựa chọn không hợp lệ!\n";
+            break;
+        }
+    } while (luachon != 0);
         return ;
     }
-    }
-}
 void xuatChieu(){
     int luachon;
     while(1){
@@ -96,16 +257,22 @@ void xuatChieu(){
         case 3:
         break;
         case 0:
+        cout << "Thoát chương trình.\n";
+        break;
+        default:
+            cout << "Lựa chọn không hợp lệ!\n";
+            break;
+        }
+    } while (luachon != 0);
         return ;
     }
-    }
-}
 void sapChieu(){
+    string ma;
     int luachon;
     while(1){
         cout<<"1.1.1 Thêm phim vào danh sách."<<endl;
         cout<<"1.1.2 Xóa phim khỏi danh sách."<<endl;
-        cout<<"1.1.3 Tìm phim."<<endl;
+        cout<<"1.1.3 Tìm phim theo mã."<<endl;
         cout<<"1.1.4 Xem danh sách."<<endl;
         cout<<"1.1.5 Chuyển phim vào danh sách đang chiếu."<<endl;
         cout<<"0. Quay lại."<<endl;
@@ -113,38 +280,80 @@ void sapChieu(){
         cin>>luachon;
     switch(luachon){
         case 1:
+        sc.themPhim();
         break;
         case 2:
+        cin.ignore();
+        cout << "Nhập mã phim cần xóa: ";
+        getline(cin, ma);
+        sc.xoaPhim(ma);
         break;
         case 3:
+        cin.ignore();
+        cout << "Nhập mã phim cần tìm: ";
+        getline(cin, ma);
+        if (sc.timKiem(ma)) {
+            danhSachPhim::inTieuDe();
+            sc.timKiem(ma)->data.xuatPhim();
+        } 
+        else{
+                cout << "Không tìm thấy phim!\n";}
         break;
         case 4:
+        sc.xuatDanhSach();
+        break;
+        case 5:
+        cin.ignore();
+        cout << "Nhập mã phim cần chuyển sang đang chiếu: ";
+        getline(cin, ma);
+        chuyenPhim(ma);
         break;
         case 0:
+       /* cout << "Thoát chương trình.\n";
+        break;
+        default:
+            cout << "Lựa chọn không hợp lệ!\n";
+            break;
+        }
+    } while (luachon != 0);*/
         return ;
     }
-    }
+}
 }
 void dangChieu(){
-    danhSachPhim a;
+    string ma;
     int luachon;
     while(1){
         cout<<"1.1.1 Thêm phim vào danh sách."<<endl;
         cout<<"1.1.2 Xóa phim khỏi danh sách."<<endl;
-        cout<<"1.1.3 Tìm phim."<<endl;
+        cout<<"1.1.3 Tìm phim theo mã."<<endl;
         cout<<"1.1.4 Xem danh sách."<<endl;
         cout<<"0. Quay lại."<<endl;
         cout<<"Chọn chức năng: "<<endl;
         cin>>luachon;
     switch(luachon){
         case 1:
-        a.themPhim();
+        dc.themPhim();
         break;
         case 2:
+        cin.ignore();
+        cout << "Nhập mã phim cần xóa: ";
+        getline(cin, ma);
+        dc.xoaPhim(ma);
         break;
         case 3:
+        cin.ignore();
+        cout << "Nhập mã phim cần tìm: ";
+        getline(cin, ma);
+        if (dc.timKiem(ma)) {
+            danhSachPhim::inTieuDe();
+            dc.timKiem(ma)->data.xuatPhim();
+        } 
+        else{
+                cout << "Không tìm thấy phim!\n";}
         break;
         case 4:
+        dc.xuatDanhSach();
         break;
         case 0:
         return ;
@@ -167,9 +376,16 @@ void qlDanhSachPhim(){
         sapChieu();
         break;
         case 0:
+      /* cout << "Quay lại.\n";
+        break;
+        default:
+            cout << "Lựa chọn không hợp lệ!\n";
+            break;
+        }
+    } while (luachon != 0);*/
         return ;
     }
-    }
+}
 }
 int main(){
     int luachon;
@@ -196,7 +412,13 @@ int main(){
         doanhThu();
         break;
         case 0:
+        cout << "Thoát chương trình.\n";
+        break;
+        default:
+            cout << "Lựa chọn không hợp lệ!\n";
+            break;
+        }
+    } while (luachon != 0);
         return 0;
     }
-    }
-}
+    
