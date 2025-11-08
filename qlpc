@@ -1,0 +1,139 @@
+#include<iostream>
+#include <iomanip>
+using namespace std;
+class phongChieu{
+    private:
+    string maPhong;
+    string loaiPhong;
+    int soGhe;
+    string tinhTrang;
+    public:
+    phongChieu(){
+        soGhe=0;
+    }
+    
+    string getMaPhong() const { return maPhong; }
+    string getLoaiPhong() const { return loaiPhong; }
+    int getSoGhe() const { return soGhe; }
+    string getTinhTrang() const { return tinhTrang; }
+    
+    void setMaPhong(const string &ma){ maPhong=ma; }
+    void setLoaiPhong(const string &lp){ loaiPhong=lp; }
+    void setSoGhe(const int &sg){ soGhe=sg; }
+    void setTinhTrang(const string&tt){ tinhTrang=tt; }
+    
+    void nhapPhong(){
+        cout<<"Nhập mã phòng: ";
+        getline(cin, maPhong);
+        cout<<"Nhập loại phòng: ";
+        getline(cin, loaiPhong);
+        cout<<"Nhập số ghế: ";
+        cin>>soGhe;
+        cin.ignore();
+        cout<<"Nhập tình trạng: ";
+        getline(cin, tinhTrang);
+    }
+    void hienThiPhong() const {
+        cout << left
+             << setw(15) << maPhong
+             << setw(15) << loaiPhong
+             << setw(13) << soGhe
+             << setw(13) << tinhTrang
+             << endl;
+    }
+
+    static void inTieuDe() {
+        cout << left
+             << setw(15) << "Mã phòng"
+             << setw(18) << "Loại phòng"
+             << setw(18) << "Số ghế"
+             << setw(15) << "Tình trạng"
+             << endl;
+
+    }
+};
+struct Node1 {
+    phongChieu data;
+    Node1* next;
+    Node1(const phongChieu &p){
+        data=p;
+        next=NULL;
+    }
+};
+class danhSachPhongChieu{
+  private:
+  Node1*head;
+  public:
+   danhSachPhongChieu() {
+        head=NULL;}
+    ~danhSachPhongChieu() {
+        while (head) {
+            Node1* temp = head;
+            head = head->next;
+            delete temp;
+        }
+    }
+    void themPhong(){
+        phongChieu p;
+        cin.ignore();
+        p.nhapPhong();
+        
+
+        Node1* newNode = new Node1(p);
+        if (head==NULL) {
+            head = newNode;
+        }
+        else {
+            Node1* temp = head;
+            while (temp->next!=NULL) {
+                temp = temp->next;}
+            temp->next = newNode;
+        }
+        cout << "Đã thêm phòng vào danh sách!\n";
+    }
+    
+    void xoaPhong(const string &maPhong) {
+        if (head==NULL) return;
+
+        if (head->data.getMaPhong() == maPhong) {
+            Node1* temp = head;
+            head = head->next;
+            delete temp;
+            cout << "Đã xóa phòng có mã: " << maPhong << endl;
+            return;
+        }
+
+       Node1* prev = head;        
+       Node1* curr = head->next;    
+       while (curr != NULL && curr->data.getMaPhong() != maPhong) {
+        prev = curr;            
+        curr = curr->next;      
+    }
+
+    if (curr != NULL) {
+        prev->next = curr->next; 
+        delete curr;             
+        cout << "Đã xóa phòng có mã: " << maPhong << endl;
+    } 
+    else {
+        cout << "Không tìm thấy phòng có mã " << maPhong << endl;
+    }
+}
+void xuatDanhSach() const {
+        if (head==NULL) {
+            cout << "Danh sách phòng rỗng!\n";
+            return;
+        }
+        phongChieu::inTieuDe();
+        Node1* temp = head;
+        while (temp) {
+            temp->data.hienThiPhong();
+            temp = temp->next;
+        }
+    }
+};
+int main(){
+    danhSachPhongChieu a;
+    a.themPhong();
+    a.xuatDanhSach();
+}
