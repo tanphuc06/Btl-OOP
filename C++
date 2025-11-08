@@ -2,8 +2,6 @@
 #include <string>
 #include <iomanip>
 using namespace std;
-//danhSachPhimList sc; 
-//danhSachPhimList dc;
 class danhSachPhim {
 private:
     string maPhim;
@@ -162,7 +160,6 @@ public:
             temp = temp->next;
         }
     }
-};
     void themPhimTuDanhSachKhac(const danhSachPhim &p) {
     Node* newNode = new Node(p);
     if (head == NULL) {
@@ -176,7 +173,9 @@ public:
     }
     cout << "Đã thêm phim vào danh sách!\n";
 }
-
+};
+danhSachPhimList sc; 
+danhSachPhimList dc;
     void chuyenPhim(const string &maPhim){
         Node* nodeTim = sc.timKiem(maPhim); 
     if (nodeTim != NULL) {
@@ -188,9 +187,6 @@ public:
         cout << "Không tìm thấy phim có mã " << maPhim << " trong danh sách sắp chiếu.\n";
     }
     }
-
-danhSachPhimList sc; 
-danhSachPhimList dc;
 void doanhThu(){
      int luachon;
     while(1){
