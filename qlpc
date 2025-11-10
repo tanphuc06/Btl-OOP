@@ -75,7 +75,6 @@ class danhSachPhongChieu{
     }
     void themPhong(){
         phongChieu p;
-        cin.ignore();
         p.nhapPhong();
         
 
@@ -131,9 +130,54 @@ void xuatDanhSach() const {
             temp = temp->next;
         }
     }
+    
+    void timPhong(const string &tinhTrang){
+        Node1* temp = head;
+        bool timThay = false;
+        phongChieu::inTieuDe();
+        while (temp !=NULL) {
+            if (temp->data.getTinhTrang() == tinhTrang ){
+                temp->data.hienThiPhong();
+                timThay= true;}
+            temp = temp->next;
+        }
+        if (timThay==false){
+        cout << "Không có phòng nào có trạng thái \"" << tinhTrang << "\"!\n";
+    }
+    }
 };
 int main(){
     danhSachPhongChieu a;
-    a.themPhong();
-    a.xuatDanhSach();
+     string ma;
+    int luachon;
+    while(1){
+        cout<<"2.1 Thêm phòng chiếu."<<endl;
+        cout<<"2.2 Xóa phòng chiếu."<<endl;
+        cout<<"2.3 Xem danh sách các phòng chiếu."<<endl;
+        cout<<"2.4 Tìm phòng chiếu theo trạng thái."<<endl;
+        cout<<"0. Quay lại."<<endl;
+        cout<<"Chọn chức năng: "<<endl;
+        cin>>luachon;
+        cin.ignore();
+    switch(luachon){
+        case 1:
+        a.themPhong();
+        break;
+        case 2:
+         cout<<"Nhập mã phòng bạn muốn xóa: ";
+         getline(cin,ma);
+         a.xoaPhong(ma);
+        break;
+        case 3:
+        a.xuatDanhSach();
+        break;
+        case 4:
+        cout << "Nhập trạng thái cần tìm: ";
+        getline(cin, ma);
+        a.timPhong(ma);
+        break;
+        case 0:
+        return 0 ;
+    }
+    }
 }
