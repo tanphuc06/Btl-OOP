@@ -76,7 +76,14 @@ class danhSachPhongChieu{
     void themPhong(){
         phongChieu p;
         p.nhapPhong();
-        
+        Node1* temp = head;
+        while(temp) {
+        if(temp->data.getMaPhong() == p.getMaPhong()) {
+            cout << "Mã phòng này đã tồn tại! Không thể thêm.\n";
+            return; 
+        }
+        temp = temp->next;
+    }
 
         Node1* newNode = new Node1(p);
         if (head==NULL) {
@@ -92,7 +99,9 @@ class danhSachPhongChieu{
     }
     
     void xoaPhong(const string &maPhong) {
-        if (head==NULL) return;
+        if (head==NULL) {
+            cout<<"Danh sách phòng trống!\n";
+        return;}
 
         if (head->data.getMaPhong() == maPhong) {
             Node1* temp = head;
@@ -145,6 +154,36 @@ void xuatDanhSach() const {
         cout << "Không có phòng nào có trạng thái \"" << tinhTrang << "\"!\n";
     }
     }
+     Node1* timKiem(const string &maPhong) {
+        Node1* temp = head;
+        while (temp !=NULL) {
+            if (temp->data.getMaPhong() == maPhong)
+                return temp;
+            temp = temp->next;
+        }
+        return NULL;
+    }
+    void suaPhong(const string &maPhong) {
+    if (head == NULL) {
+        cout << "Danh sách phòng rỗng!\n";
+        return;
+    }
+
+    Node1* temp = head;
+    while (temp) {
+        if (temp->data.getMaPhong() == maPhong) {
+            cout << "Đã tìm thấy phòng. Nhập thông tin mới:\n";
+            temp->data.nhapPhong();
+            temp->data.setMaPhong(maPhong);
+            cout << "Đã cập nhật thông tin phòng thành công!\n";
+            return;
+        }
+        temp = temp->next;
+    }
+
+    cout << "Không tìm thấy phòng có mã: " << maPhong << endl;
+}
+
 };
 int main(){
     danhSachPhongChieu a;
@@ -155,6 +194,8 @@ int main(){
         cout<<"2.2 Xóa phòng chiếu."<<endl;
         cout<<"2.3 Xem danh sách các phòng chiếu."<<endl;
         cout<<"2.4 Tìm phòng chiếu theo trạng thái."<<endl;
+        cout<<"2.5 Tìm phòng chiếu theo mã phòng."<<endl;
+        cout<<"2.6 Cập nhật phòng"<<endl;
         cout<<"0. Quay lại."<<endl;
         cout<<"Chọn chức năng: "<<endl;
         cin>>luachon;
@@ -175,6 +216,21 @@ int main(){
         cout << "Nhập trạng thái cần tìm: ";
         getline(cin, ma);
         a.timPhong(ma);
+        break;
+        case 5:
+        cout << "Nhập mã phim cần tìm: ";
+        getline(cin, ma);
+        if (a.timKiem(ma)) {
+            phongChieu::inTieuDe();
+            a.timKiem(ma)->data.hienThiPhong();
+        } 
+        else{
+                cout << "Không tìm thấy phòng!\n";}
+        break;
+        case 6:
+        cout << "Nhập mã phòng cần sửa: ";
+        getline(cin, ma);
+        a.suaPhong(ma);
         break;
         case 0:
         return 0 ;
