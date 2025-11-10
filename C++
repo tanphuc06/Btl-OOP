@@ -175,6 +175,25 @@ public:
     }
     cout << "Đã thêm phim vào danh sách!\n";
 }
+void suaPhim(const string &maPhim) {
+    if (head == NULL) {
+        cout << "Danh sách phòng rỗng!\n";
+        return;
+    }
+    Node* temp = head;
+    while (temp) {
+        if (temp->data.getMaPhim() == maPhim) {
+            cout << "Đã tìm thấy phim. Nhập thông tin mới:\n";
+            temp->data.nhapPhim();
+            temp->data.setMaPhim(maPhim);
+            cout << "Đã cập nhật thông tin phim thành công!\n";
+            return;
+        }
+        temp = temp->next;
+    }
+
+    cout << "Không tìm thấy phim có mã: " << maPhim << endl;
+}
 };
 danhSachPhimList sc; 
 danhSachPhimList dc;
@@ -479,7 +498,7 @@ void qlPhongChieu(){
                 cout << "Không tìm thấy phòng!\n";}
         break;
         case 6:
-        cout << "Nhập mã phòng cần sửa: ";
+        cout << "Nhập mã phòng cần cập nhật: ";
         getline(cin, ma);
         a.suaPhong(ma);
         break;
@@ -497,6 +516,7 @@ void sapChieu(){
         cout<<"1.1.3 Tìm phim theo mã."<<endl;
         cout<<"1.1.4 Xem danh sách."<<endl;
         cout<<"1.1.5 Chuyển phim vào danh sách đang chiếu."<<endl;
+        cout<<"1.1.6 Cập nhật phim."<<endl;
         cout<<"0. Quay lại."<<endl;
         cout<<"Chọn chức năng: "<<endl;
         cin>>luachon;
@@ -530,6 +550,12 @@ void sapChieu(){
         getline(cin, ma);
         chuyenPhim(ma);
         break;
+        case 6:
+        cin.ignore();
+        cout << "Nhập mã phim cần cập nhật: ";
+        getline(cin, ma);
+        sc.suaPhim(ma);
+        break;
         case 0:
         return ;
     }
@@ -543,6 +569,7 @@ void dangChieu(){
         cout<<"1.1.2 Xóa phim khỏi danh sách."<<endl;
         cout<<"1.1.3 Tìm phim theo mã."<<endl;
         cout<<"1.1.4 Xem danh sách."<<endl;
+        cout<<"1.1.5 Cập nhật phim."<<endl;
         cout<<"0. Quay lại."<<endl;
         cout<<"Chọn chức năng: "<<endl;
         cin>>luachon;
@@ -569,6 +596,12 @@ void dangChieu(){
         break;
         case 4:
         dc.xuatDanhSach();
+        break;
+        case 5:
+        cin.ignore();
+        cout << "Nhập mã phim cần cập nhật: ";
+        getline(cin, ma);
+        dc.suaPhim(ma);
         break;
         case 0:
         return ;
