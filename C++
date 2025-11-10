@@ -187,12 +187,157 @@ danhSachPhimList dc;
         cout << "Không tìm thấy phim có mã " << maPhim << " trong danh sách sắp chiếu.\n";
     }
     }
+class phongChieu{
+    private:
+    string maPhong;
+    string loaiPhong;
+    int soGhe;
+    string tinhTrang;
+    public:
+    phongChieu(){
+        soGhe=0;
+    }
+    
+    string getMaPhong() const { return maPhong; }
+    string getLoaiPhong() const { return loaiPhong; }
+    int getSoGhe() const { return soGhe; }
+    string getTinhTrang() const { return tinhTrang; }
+    
+    void setMaPhong(const string &ma){ maPhong=ma; }
+    void setLoaiPhong(const string &lp){ loaiPhong=lp; }
+    void setSoGhe(const int &sg){ soGhe=sg; }
+    void setTinhTrang(const string&tt){ tinhTrang=tt; }
+    
+    void nhapPhong(){
+        cout<<"Nhập mã phòng: ";
+        getline(cin, maPhong);
+        cout<<"Nhập loại phòng: ";
+        getline(cin, loaiPhong);
+        cout<<"Nhập số ghế: ";
+        cin>>soGhe;
+        cin.ignore();
+        cout<<"Nhập tình trạng: ";
+        getline(cin, tinhTrang);
+    }
+    void hienThiPhong() const {
+        cout << left
+             << setw(15) << maPhong
+             << setw(15) << loaiPhong
+             << setw(13) << soGhe
+             << setw(13) << tinhTrang
+             << endl;
+    }
+
+    static void inTieuDe() {
+        cout << left
+             << setw(15) << "Mã phòng"
+             << setw(18) << "Loại phòng"
+             << setw(18) << "Số ghế"
+             << setw(15) << "Tình trạng"
+             << endl;
+
+    }
+};
+struct Node1 {
+    phongChieu data;
+    Node1* next;
+    Node1(const phongChieu &p){
+        data=p;
+        next=NULL;
+    }
+};
+class danhSachPhongChieu{
+  private:
+  Node1*head;
+  public:
+   danhSachPhongChieu() {
+        head=NULL;}
+    ~danhSachPhongChieu() {
+        while (head) {
+            Node1* temp = head;
+            head = head->next;
+            delete temp;
+        }
+    }
+    void themPhong(){
+        phongChieu p;
+        p.nhapPhong();
+        
+
+        Node1* newNode = new Node1(p);
+        if (head==NULL) {
+            head = newNode;
+        }
+        else {
+            Node1* temp = head;
+            while (temp->next!=NULL) {
+                temp = temp->next;}
+            temp->next = newNode;
+        }
+        cout << "Đã thêm phòng vào danh sách!\n";
+    }
+    
+    void xoaPhong(const string &maPhong) {
+        if (head==NULL) return;
+
+        if (head->data.getMaPhong() == maPhong) {
+            Node1* temp = head;
+            head = head->next;
+            delete temp;
+            cout << "Đã xóa phòng có mã: " << maPhong << endl;
+            return;
+        }
+
+       Node1* prev = head;        
+       Node1* curr = head->next;    
+       while (curr != NULL && curr->data.getMaPhong() != maPhong) {
+        prev = curr;            
+        curr = curr->next;      
+    }
+
+    if (curr != NULL) {
+        prev->next = curr->next; 
+        delete curr;             
+        cout << "Đã xóa phòng có mã: " << maPhong << endl;
+    } 
+    else {
+        cout << "Không tìm thấy phòng có mã " << maPhong << endl;
+    }
+}
+void xuatDanhSach() const {
+        if (head==NULL) {
+            cout << "Danh sách phòng rỗng!\n";
+            return;
+        }
+        phongChieu::inTieuDe();
+        Node1* temp = head;
+        while (temp) {
+            temp->data.hienThiPhong();
+            temp = temp->next;
+        }
+    }
+    
+    void timPhong(const string &tinhTrang){
+        Node1* temp = head;
+        bool timThay = false;
+        phongChieu::inTieuDe();
+        while (temp !=NULL) {
+            if (temp->data.getTinhTrang() == tinhTrang ){
+                temp->data.hienThiPhong();
+                timThay= true;}
+            temp = temp->next;
+        }
+        if (timThay==false){
+        cout << "Không có phòng nào có trạng thái \"" << tinhTrang << "\"!\n";
+    }
+    }
+};
 void doanhThu(){
      int luachon;
     while(1){
-        cout<<"4.1 Tổng doanh thu trong ngày."<<endl;
-        cout<<"4.2 Tổng doanh thu trong tuần."<<endl;
-        cout<<"4.3 Tổng doanh thu trong tháng."<<endl;
+        cout<<"5.1 Tổng doanh thu trong ngày."<<endl;
+        cout<<"5.2 Tổng doanh thu trong tuần."<<endl;
+        cout<<"5.3 Tổng doanh thu trong tháng."<<endl;
         cout<<"0. Quay lại."<<endl;
         cout<<"Chọn chức năng: "<<endl;
         cin>>luachon;
@@ -206,18 +351,14 @@ void doanhThu(){
         case 0:
         cout << "Thoát chương trình.\n";
         break;
-        default:
-            cout << "Lựa chọn không hợp lệ!\n";
-            break;
-        }
-    } while (luachon != 0);
-        return ;
+}
+}
     }
 void ve(){
     int luachon;
     while(1){
-        cout<<"3.1 Bán vé."<<endl;
-        cout<<"3.2 In vé."<<endl;
+        cout<<"4.1 Đặt vé."<<endl;
+        cout<<"4.2 In vé."<<endl;
         cout<<"0. Quay lại."<<endl;
         cout<<"Chọn chức năng: "<<endl;
         cin>>luachon;
@@ -229,19 +370,16 @@ void ve(){
         case 0:
         cout << "Thoát chương trình.\n";
         break;
-        default:
-            cout << "Lựa chọn không hợp lệ!\n";
-            break;
-        }
-    } while (luachon != 0);
         return ;
+    }
+    }
     }
 void xuatChieu(){
     int luachon;
     while(1){
-        cout<<"2.1 Nhập xuất chiếu."<<endl;
-        cout<<"2.2 Xóa xuất chiếu."<<endl;
-        cout<<"2.3 Xem danh sách các xuất chiếu."<<endl;
+        cout<<"3.1 Thêm xuất chiếu."<<endl;
+        cout<<"3.2 Xóa xuất chiếu."<<endl;
+        cout<<"3.3 Xem danh sách các xuất chiếu."<<endl;
         cout<<"0. Quay lại."<<endl;
         cout<<"Chọn chức năng: "<<endl;
         cin>>luachon;
@@ -253,15 +391,45 @@ void xuatChieu(){
         case 3:
         break;
         case 0:
-        cout << "Thoát chương trình.\n";
-        break;
-        default:
-            cout << "Lựa chọn không hợp lệ!\n";
-            break;
-        }
-    } while (luachon != 0);
         return ;
     }
+    }
+}
+void qlPhongChieu(){
+    danhSachPhongChieu a;
+     string ma;
+    int luachon;
+    while(1){
+        cout<<"2.1 Thêm phòng chiếu."<<endl;
+        cout<<"2.2 Xóa phòng chiếu."<<endl;
+        cout<<"2.3 Xem danh sách các phòng chiếu."<<endl;
+        cout<<"2.4 Tìm phòng chiếu theo trạng thái."<<endl;
+        cout<<"0. Quay lại."<<endl;
+        cout<<"Chọn chức năng: "<<endl;
+        cin>>luachon;
+        cin.ignore();
+    switch(luachon){
+        case 1:
+        a.themPhong();
+        break;
+        case 2:
+         cout<<"Nhập mã phòng bạn muốn xóa: ";
+         getline(cin,ma);
+         a.xoaPhong(ma);
+        break;
+        case 3:
+        a.xuatDanhSach();
+        break;
+        case 4:
+        cout << "Nhập trạng thái cần tìm: ";
+        getline(cin, ma);
+        a.timPhong(ma);
+        break;
+        case 0:
+        return ;
+    }
+    }
+}
 void sapChieu(){
     string ma;
     int luachon;
@@ -305,13 +473,6 @@ void sapChieu(){
         chuyenPhim(ma);
         break;
         case 0:
-       /* cout << "Thoát chương trình.\n";
-        break;
-        default:
-            cout << "Lựa chọn không hợp lệ!\n";
-            break;
-        }
-    } while (luachon != 0);*/
         return ;
     }
 }
@@ -372,13 +533,6 @@ void qlDanhSachPhim(){
         sapChieu();
         break;
         case 0:
-      /* cout << "Quay lại.\n";
-        break;
-        default:
-            cout << "Lựa chọn không hợp lệ!\n";
-            break;
-        }
-    } while (luachon != 0);*/
         return ;
     }
 }
@@ -388,9 +542,10 @@ int main(){
     while(1){
         cout<<"Quản lý rạp chiếu phim"<<endl;
         cout<<"1. Quản lý danh sách phim."<<endl;
-        cout<<"2. Quản lý xuất chiếu."<<endl;
-        cout<<"3. Quản lý vé."<<endl;
-        cout<<"4. Tổng doanh thu."<<endl;
+        cout<<"2. Quản lý phòng chiếu."<<endl;
+        cout<<"3. Quản lý xuất chiếu."<<endl;
+        cout<<"4. Quản lý vé."<<endl;
+        cout<<"5. Tổng doanh thu."<<endl;
         cout<<"0. Thoát."<<endl;
         cout<<"Chọn chức năng: "<<endl;
         cin>>luachon;
@@ -399,12 +554,15 @@ int main(){
         qlDanhSachPhim();
         break;
         case 2:
-        xuatChieu();
+        qlPhongChieu();
         break;
         case 3:
-        ve();
+        xuatChieu();
         break;
         case 4:
+        ve();
+        break;
+        case 5:
         doanhThu();
         break;
         case 0:
