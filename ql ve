@@ -188,7 +188,7 @@ void timXuatChieu(const int &gioChieu){
                 return &(temp->data);
             temp = temp->next;
         }
-        return nullptr;
+        return NULL;
     }
 };
 class ve{
@@ -317,6 +317,34 @@ class danhSachVe{
             cout<<"Không tim thấy vé có mã lã: "<<maVe<<endl;
         }
     }
+    void suaVe(const string &maVe) {
+    if (head == NULL) {
+        cout << "Danh sách phòng rỗng!\n";
+        return;
+    }
+
+    Node3* temp = head;
+    while (temp) {
+        if (temp->data.getMaVe() == maVe) {
+            cout << "Đã tìm thấy vé. Nhập thông tin mới:\n";
+            temp->data.nhap();
+            temp->data.setMaVe(maVe);
+            cout << "Đã cập nhật thông tin vé thành công!\n";
+            return;
+        }
+        temp = temp->next;
+    }
+    cout << "Không tìm thấy vé có mã: " << maVe << endl;
+}
+    Node3* timKiem(const string &maVe) const {
+        Node3 *temp = head;
+        while (temp != NULL) {
+            if (temp->data.getMaVe() == maVe)
+                return temp;
+            temp = temp->next;
+        }
+        return NULL;
+    }
 };
 int main(){
     danhSachXuatChieu ds;
@@ -341,7 +369,9 @@ int main(){
         dsv.themVe();
         break;
         case 2:
-        
+        cout<<"Nhập mã vé mà bạn muốn sửa: ";
+        getline(cin,ma);
+        dsv.suaVe(ma);
         break;
         case 3:
         cout<<"Nhập mã vé mà bạn muốn xóa: ";
@@ -349,6 +379,14 @@ int main(){
         dsv.xoaVe(ma);
         break;
         case 4:
+        cout << "Nhập mã vé cần tìm: ";
+        getline(cin, ma);
+        if (dsv.timKiem(ma)) {
+            ve::inTieuDe();
+            dsv.timKiem(ma)->data.hienThi(ds);
+        } 
+        else{
+                cout << "Không tìm thấy vé!\n";}
         break;
         case 5:
         ve::inTieuDe();
