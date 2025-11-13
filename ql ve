@@ -1,0 +1,373 @@
+#include<iostream>
+#include <iomanip>
+using namespace std;
+class xuatChieu{
+  private:
+  string maXuatChieu;
+  string maPhim;
+  string maPhong;
+  string ngayChieu;
+  int gioChieu;
+  float giaVe;
+  public:
+  xuatChieu(){
+      giaVe=0;
+  }
+  string getMaXuatChieu() const { return maXuatChieu;}
+  string getMaPhim() const { return maPhim;}
+  string getMaPhong() const { return maPhong;}
+  string getNgayChieu() const { return ngayChieu;}
+  int getGioChieu() const { return gioChieu;}
+  float getGiaVe() const { return giaVe;}
+  
+  void setMaXuatChieu(const string &xuatChieu){ maXuatChieu=xuatChieu;}
+  void setMaPhim(const string &phim){ maPhim=phim;}
+  void setMaPhong(const string &phong){ maPhong=phong;}
+  void setNgayChieu(const string &ngaychieu){ ngayChieu=ngaychieu;}
+  void setGioChieu(const int &giochieu){ gioChieu=giochieu;}
+  void setGiaVe(const float &giave){ giaVe=giave;}
+  
+  void nhap(){
+      cout<<"Nhập mã xuất chiếu: "; getline(cin,maXuatChieu);
+      cout<<"Nhập mã phim: "; getline(cin,maPhim);
+      cout<<"Nhập mã phòng: "; getline(cin,maPhong);
+      cout<<"Nhập ngày chiếu: "; getline(cin,ngayChieu);
+      do{
+      cout<<"Nhập giờ chiếu(0-24): ";
+      cin>>gioChieu;}while(gioChieu<=0 || gioChieu >=25);
+      cout<<"Nhập giá vé: ";
+      cin>>giaVe;
+  }
+  
+  void hienThi() const {
+        cout << left
+             << setw(15) << maXuatChieu
+             << setw(10) << maPhim
+             << setw(8) << maPhong
+             << setw(10) << ngayChieu
+             << setw(10) << gioChieu
+             << setw(10) << giaVe
+             << endl;
+    }
+
+    static void inTieuDe() {
+        cout << left
+             << setw(20) << "Mã xuất chiếu"
+             << setw(10) << "Mã phim"
+             << setw(14) << "Mã phòng"
+             << setw(15) << "Ngày chiếu"
+             << setw(18) << "Giờ chiếu"
+             << setw(15) << "Giá vé"
+             << endl;
+
+    }
+};
+struct Node2 {
+    xuatChieu data;
+    Node2* next;
+    Node2(const xuatChieu &p){
+        data=p;
+        next=NULL;
+    }
+};
+class danhSachXuatChieu{
+    private:
+    Node2*head;
+    public:
+    danhSachXuatChieu(){
+        head=NULL;}
+    ~danhSachXuatChieu(){
+        while(head != NULL){
+            Node2* temp= head;
+            head= head->next;
+            delete temp;
+        }
+    }
+    void themXuatChieu(){
+        xuatChieu p;
+        p.nhap();
+        Node2* temp= head;
+        while(temp!= NULL){
+            if(temp->data.getMaXuatChieu() == p.getMaXuatChieu()){
+                cout<<"Mã xuất chiếu này đã tồn tại. Không thể thêm. \n";
+                return;
+            }
+            temp=temp->next;
+        }
+        Node2* newNode = new Node2(p);
+        if (head==NULL) {
+            head = newNode;
+        }
+        else {
+            Node2* temp = head;
+            while (temp->next!=NULL) {
+                temp = temp->next;}
+            temp->next = newNode;
+        }
+        cout << "Đã thêm xuất chiếu vào danh sách!\n";
+    }
+    void xoaXuatChieu(const string &maXuatChieu) {
+        if (head==NULL) {
+            cout<<"Danh sách phòng trống!\n";
+        return;}
+
+        if (head->data.getMaXuatChieu() == maXuatChieu) {
+            Node2* temp = head;
+            head = head->next;
+            delete temp;
+            cout << "Đã xóa xuất chiếu có mã: " << maXuatChieu << endl;
+            return;
+        }
+
+       Node2* prev = head;        
+       Node2* curr = head->next;    
+       while (curr != NULL && curr->data.getMaXuatChieu() != maXuatChieu) {
+        prev = curr;            
+        curr = curr->next;      
+    }
+
+    if (curr != NULL) {
+        prev->next = curr->next; 
+        delete curr;             
+        cout << "Đã xóa xuất chiếu có mã: " << maXuatChieu << endl;
+    } 
+    else {
+        cout << "Không tìm thấy xuất chiếu có mã " << maXuatChieu << endl;
+    }
+}
+    void xuatDanhSach() const {
+        if (head==NULL) {
+            cout << "Danh sách phòng rỗng!\n";
+            return;
+        }
+        xuatChieu::inTieuDe();
+        Node2* temp = head;
+        while (temp) {
+            temp->data.hienThi();
+            temp = temp->next;
+        }
+    }
+    void suaXuatChieu(const string &maXuatChieu) {
+    if (head == NULL) {
+        cout << "Danh sách phòng rỗng!\n";
+        return;
+    }
+
+    Node2* temp = head;
+    while (temp) {
+        if (temp->data.getMaXuatChieu() == maXuatChieu) {
+            cout << "Đã tìm thấy phòng. Nhập thông tin mới:\n";
+            temp->data.nhap();
+            temp->data.setMaXuatChieu(maXuatChieu);
+            cout << "Đã cập nhật thông tin xuất chiếu thành công!\n";
+            return;
+        }
+        temp = temp->next;
+    }
+
+    cout << "Không tìm thấy xuất chiếu có mã: " << maXuatChieu << endl;
+}
+void timXuatChieu(const int &gioChieu){
+        Node2* temp = head;
+        bool timThay = false;
+        xuatChieu::inTieuDe();
+        while (temp !=NULL) {
+            if (temp->data.getGioChieu() == gioChieu ){
+                temp->data.hienThi();
+                timThay= true;}
+            temp = temp->next;
+        }
+        if (timThay==false){
+        cout << "Không có phòng nào có giờ chiếu \"" << gioChieu << "\"!\n";
+    }
+    }
+     xuatChieu* timXuatChieuTheoMa(const string &ma) const {
+        Node2 *temp = head;
+        while (temp != NULL) {
+            if (temp->data.getMaXuatChieu() == ma)
+                return &(temp->data);
+            temp = temp->next;
+        }
+        return nullptr;
+    }
+};
+class ve{
+  private:
+  string maVe;
+  string maSuatChieu;
+  string trangThai;
+  public:
+  string getMaVe() const {return maVe;}
+  string getMaSuatChieu() const {return maSuatChieu;}
+  string getTrangThai() const {return trangThai;}
+  
+  void setMaVe(const string &mave) { maVe=mave; }
+  void setMaSuatChieu(const string &masuatchieu) { maSuatChieu=masuatchieu;}
+  void setTrangThai(const string &tt) { trangThai=tt;}
+  
+  void nhap(){
+      cout<<"Nhập mã vé: "; getline(cin,maVe);
+      cout<<"Nhập mã suất chiếu: "; getline(cin,maSuatChieu);
+  }
+
+static void inTieuDe() {
+    cout << left
+         << setw(8) << "Mã vé"
+         << setw(20) << "Mã suất chiếu"
+         << setw(10) << "Mã phim"
+         << setw(11) << "Mã phòng"
+         << setw(14) << "Ngày chiếu"
+         << setw(14) << "Giờ chiếu"
+         << setw(10) << "Giá vé"
+         << endl;
+}
+
+    void hienThi(const danhSachXuatChieu &ds) const {
+    xuatChieu* x = ds.timXuatChieuTheoMa(maSuatChieu);
+    cout << left << setw(10) << maVe;
+    if(x) {
+        x->hienThi();
+    } else {
+        cout << setw(75) << "[Không tìm thấy suất chiếu]";
+    }
+}
+};
+struct Node3 {
+    ve data;
+    Node3* next;
+    Node3(const ve &p){
+        data=p;
+        next=NULL;
+    }
+};
+class danhSachVe{
+  private:
+  Node3*head;
+  public:
+  danhSachVe(){
+      head=NULL;
+  }
+  ~danhSachVe(){
+        while(head != NULL){
+            Node3* temp= head;
+            head= head->next;
+            delete temp;
+        }
+    }
+    void themVe(){
+        ve a;
+        a.nhap();
+        Node3* temp = head;
+        while(temp!=NULL){
+            if(temp->data.getMaVe() == a.getMaVe()){
+                cout<<"Mã vé này đã tồn tại. Không thể thêm\n";
+                return;
+            }
+            temp=temp->next;
+        }
+        Node3*newNode=new Node3(a);
+        if(head==NULL){
+            head=newNode;
+        }
+        else{
+            Node3*temp=head;
+            while(temp->next!=NULL){
+                temp=temp->next;}
+                temp->next=newNode;
+            
+        }
+        cout<<"Đã thêm vé vào danh sách.\n";
+    }
+    void hienThiVe(const danhSachXuatChieu &ds) const{
+        if(head==NULL){
+            cout<<"Danh sách vé rỗng!";
+            return;
+        }
+        Node3*temp=head;
+        while(temp!= NULL){
+            temp->data.hienThi(ds);
+            temp=temp->next;
+        }
+    }
+    void xoaVe(const string &maVe){
+        if(head== NULL){
+            cout<<"Danh sách vé trống!\n";
+            return;
+        }
+        if(head->data.getMaVe() == maVe){
+            Node3*temp=head;
+            head=head->next;
+            delete temp;
+            cout<<"Đã xóa vé có mã là: "<<maVe<<endl;
+        }
+        
+        Node3* prev= head;
+        Node3* curr=head->next;
+        
+        while(curr != NULL && curr->data.getMaVe()!=maVe){
+            prev = curr;
+            curr=curr->next;
+        }
+        if(curr !=NULL){
+            prev->next=curr->next;
+            delete curr;
+            cout<<"Đã xóa vé có mã là: "<<maVe<<endl;
+        }
+        else{
+            cout<<"Không tim thấy vé có mã lã: "<<maVe<<endl;
+        }
+    }
+};
+int main(){
+    danhSachXuatChieu ds;
+    danhSachVe dsv;
+    string ma;
+     int luachon;
+    while(1){
+        cout<<"4.1 Thêm vé."<<endl;
+        cout<<"4.2 Sửa vé."<<endl;
+        cout<<"4.3 Xóa vé."<<endl;
+        cout<<"4.4 Tìm kiếm vé."<<endl;
+        cout<<"4.5 Hiển thị danh sách vé."<<endl;
+        cout<<"4.6 Đặt vé."<<endl;
+        cout<<"4.7 Thanh toán vé."<<endl;
+        cout<<"4.8 Test."<<endl;
+        cout<<"0. Quay lại."<<endl;
+        cout<<"Chọn chức năng: "<<endl;
+        cin>>luachon;
+        cin.ignore();
+    switch(luachon){
+        case 1:
+        dsv.themVe();
+        break;
+        case 2:
+        
+        break;
+        case 3:
+        cout<<"Nhập mã vé mà bạn muốn xóa: ";
+        getline(cin,ma);
+        dsv.xoaVe(ma);
+        break;
+        case 4:
+        break;
+        case 5:
+        ve::inTieuDe();
+        dsv.hienThiVe(ds);
+        break;
+        case 6:
+        break;
+        case 7:
+        break;
+        case 8:
+        cout << "== Nhập danh sách suất chiếu ==\n";
+        
+        ds.themXuatChieu();
+        break;
+        case 0:
+        cout << "Thoát chương trình.\n";
+        break;
+        return 0 ;
+    }
+    }
+    }
+    
