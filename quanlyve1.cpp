@@ -306,14 +306,76 @@ class danhSachVe{
         cout << "\n ĐẶT VÉ THÀNH CÔNG\n";
         cout << "Mã vé của bạn: " << maVe << endl;
         cout << "Giá vé: " << suatChieuTim->getGiaVe() << " VND\n";
-        cout << "Vui lòng thanh toán trước giờ chiếu!\n";
+        cout << "Vui long thanh toan truoc gio chieu!\n";
     } else {
-        cout << "Đã hủy đặt vé.\n";
+        cout << "Da huy dat ve.\n";
+    }
+}
+void thanhToanVe(danhSachSuatChieu &dsSC){
+    if(head==NULL){
+        cout<<"Khong co ve nao de thanh toan\n";
+        return;
+    }
+    string maVe;
+    cout<<"Nhap ma ve can thanh toan: ";
+    getline(cin, maVe);
+    Node3* temp=timKiem(maVe);
+    if(temp==NULL){
+        cout<<"Khong tim thay ve co ma: "<<maVe<<endl;
+        return;
+    }
+    if(temp->data.getTrangThai()=="Da thanh toan"){
+        cout<<"Ve nay da duoc thanh toan\n";
+        return;
+    }
+    suatChieu* suatChieuTim = dsSC.timSuatChieuTheoMa(temp->data.getMaSuatChieu());
+    if (suatChieuTim == NULL) {
+        cout << "Lỗi: Không tìm thấy thông tin suất chiếu!\n";
+        return;
+    }
+    cout << "\n--- Thông tin vé cần thanh toán ---\n";
+    cout << "Mã vé: " << temp->data.getMaVe() << endl;
+    cout << "Số tiền phải trả: " << suatChieuTim->getGiaVe() << " VND\n";
+    
+    char xacNhan;
+    cout << "\nXác nhận thanh toán vé này?: ";
+    cin >> xacNhan;
+    cin.ignore();
+    
+    if (xacNhan == 'Y' || xacNhan == 'y') {
+        int phuongThuc;
+        cout<<"\n------Chon phuong thuc thanh toan------\n";
+        cout<<"1. Tien mat\n";
+        cout<<"2. The ngan hang\n";
+        cout<<"Moi quy khach lua chon phuong thuc thanh toan: ";
+        cin>>phuongThuc;
+        cin.ignore();
+        
+        if (phuongThuc==1 || phuongThuc==2){
+            temp->data.setTrangThai("Da thanh toan");
+            
+            cout << "\n----THANH TOAN THANH CONG----\n";
+            cout << "Mã vé: " << maVe << endl;
+            cout << "Số tiền: " << suatChieuTim->getGiaVe() << " VND\n";
+            switch(phuongThuc) {
+                case 1:
+                    cout << "Phương thức: Tien mat\n";
+                    break;
+                case 2:
+                    cout << "Phương thức: The ngan hang\n";
+                    break;
+            }
+            cout << "Quy khach da thanh toan thanh cong! Chuc quy khach xem phim vui ve\n";
+        } else {
+            cout << "Phuong thuc thanh toan cua quy khach khong hop le!\n";
+        }
+    } else {
+        cout << "Da huy thanh toan.\n";
     }
 }
     void hienThiVe(const danhSachSuatChieu &dsSC) const{
         if(head==NULL){
-            cout<<"Danh sách vé rỗng!";
+            cout<<"Khong co ve nao trong danh sach!";
             return;
         }
         Node3*temp=head;
@@ -402,24 +464,24 @@ int main(){
         dsVe.datVe(dsSC);
         break;
         case 2:
-        cout<<"Nhập mã vé mà bạn muốn sửa: ";
+        cout<<"NHAP MA VE MA BAN MUON SUA: ";
         getline(cin,ma);
         dsVe.suaVe(ma);
         break;
         case 3:
-        cout<<"Nhập mã vé mà bạn muốn xóa: ";
+        cout<<"NHAP MA VE MA BAN MUON XOA: ";
         getline(cin,ma);
         dsVe.xoaVe(ma);
         break;
         case 4:
-        cout << "Nhập mã vé cần tìm: ";
+        cout << "NHAP MA VE MA BAN CAN TIM: ";
         getline(cin, ma);
         if (dsVe.timKiem(ma)) {
             ve::inTieuDe();
             dsVe.timKiem(ma)->data.hienThi(dsSC);
         } 
         else{
-                cout << "Không tìm thấy vé!\n";}
+                cout << "KHONG TIM THAY VE!\n";}
         break;
         case 5:
         	cout<<"\n=========DANH SACH VE============\n";
@@ -427,12 +489,15 @@ int main(){
         dsVe.hienThiVe(dsSC);
         break;
         case 6:
+          cout<<"\n--------MOI BAN THANH TOAN VE--------------\n";
+          dsVe.thanhToanVe(dsSC);
         break;
         case 0:
-        cout << "Thoát chương trình.\n";
+        cout << "Thoat chuong trinh.\n";
         break;
         return 0 ;
     }
     }
     }
+
     
