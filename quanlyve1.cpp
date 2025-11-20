@@ -440,6 +440,34 @@ void thanhToanVe(danhSachSuatChieu &dsSC){
         }
         return NULL;
     }
+float tinhDoanhThuNgay(const string &ngay, const danhSachSuatChieu &dsXuatChieu)const {
+    float tongDoanhThuNgay=0;
+    int soVe=0;
+    Node3* temp=head;
+    
+    cout<<"\n========== DOANH THU NGAY " << ngay << " ==========\n";
+    
+    while(temp!=NULL){
+        if(temp->data.getTrangThai()=="Da thanh toan"){
+            suatChieu*sc=dsXuatChieu.timSuatChieuTheoMa(temp->data.getMaSuatChieu());
+            
+            if(sc!=NULL&&sc->getNgayChieu()==ngay){
+                tongDoanhThuNgay+=sc->getGiaVe();
+                soVe++;
+                cout<<"  Ve " << temp->data.getMaVe()
+                    << " | Gia: " << sc->getGiaVe() << " VND\n";	
+            }	
+        }
+        temp=temp->next;
+    }
+    
+    cout<<"------------------------------------------------\n";
+    cout<<"Tong so ve ban duoc trong ngay: " << soVe << " ve\n";
+    cout<<"Tong doanh thu trong ngay la: " << tongDoanhThuNgay << " VND\n";
+    cout<<"-------------------------------------------------\n";
+    
+    return tongDoanhThuNgay;
+}
 };
 int main(){
     danhSachSuatChieu dsSC;
@@ -501,3 +529,4 @@ int main(){
     }
 
     
+
