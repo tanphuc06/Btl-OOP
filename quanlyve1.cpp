@@ -503,7 +503,7 @@ void doanhThu(){
      int luachon;
       danhSachSuatChieu dsSC;
     danhSachVe dsVe;
-     string ngay, thang, nam;
+     string ngay, ngayBatDau, ngayKetThuc thang, nam;
     while(1){
         cout<<"5.1 Tổng doanh thu trong ngày."<<endl;
         cout<<"5.2 Tổng doanh thu trong tuần."<<endl;
@@ -523,6 +523,15 @@ void doanhThu(){
         	dsVe.tinhDoanhThuNgay(ngay,thang, nam, dsSC);
         	break;
         case 2:
+          cout<<"Nhap ngay bat dau tuan: ";
+        	getline(cin, ngayBatDau);
+        	cout<<"Nhap ngay ket thuc tuan: ";
+        	getline(cin, ngayKetThuc);
+        	cout<<"Nhap thang: ";
+        	getline(cin, thang);
+        	cout<<"Nhap nam: ";
+        	getline(cin, nam);
+        	dsVe.tinhDoanhThuTuan(ngayBatDau, ngayKetThuc,thang, nam, dsSC);
         	break;
         case 3:
         break;
@@ -597,6 +606,7 @@ int main(){
     }
 
     
+
 
 
 
