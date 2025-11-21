@@ -569,6 +569,11 @@ void doanhThu(){
         	dsVe.tinhDoanhThuTuan(ngayBatDau, ngayKetThuc,thang, nam, dsSC);
         	break;
         case 3:
+          	cout<<"Nhap thang: ";
+        	getline(cin, thang);
+        	cout<<"Nhap nam: ";
+        	getline(cin, nam);
+        	dsVe.tinhDoanhThuThang(thang, nam, dsSC);
         break;
         case 0:
         cout << "Thoát chương trình.\n";
@@ -641,6 +646,7 @@ int main(){
     }
 
     
+
 
 
 
