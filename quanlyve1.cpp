@@ -468,6 +468,34 @@ float tinhDoanhThuNgay(const string &ngay, const danhSachSuatChieu &dsXuatChieu)
     
     return tongDoanhThuNgay;
 }
+void doanhThu(){
+     int luachon;
+      danhSachSuatChieu dsSC;
+    danhSachVe dsVe;
+     string ngay, thang, nam;
+    while(1){
+        cout<<"5.1 Tổng doanh thu trong ngày."<<endl;
+        cout<<"5.2 Tổng doanh thu trong tuần."<<endl;
+        cout<<"5.3 Tổng doanh thu trong tháng."<<endl;
+        cout<<"0. Quay lại."<<endl;
+        cout<<"Chọn chức năng: "<<endl;
+        cin>>luachon;
+        cin.ignore();
+    switch(luachon){
+        case 1:
+        	cout<<"Nhap ngay can xem doanh thu: ";
+        	getline(cin, ngay);
+        	break;
+        case 2:
+        	break;
+        case 3:
+        break;
+        case 0:
+        cout << "Thoát chương trình.\n";
+        break;
+}
+}
+}
 };
 int main(){
     danhSachSuatChieu dsSC;
@@ -481,7 +509,7 @@ int main(){
         cout<<"4.4 Tìm kiếm vé."<<endl;
         cout<<"4.5 Hiển thị danh sách vé."<<endl;
         cout<<"4.6 Thanh toán vé."<<endl;
-        cout<<"4.7 Test."<<endl;
+        cout<<"4.7 Doanh thu."<<endl;
         cout<<"0. Quay lại."<<endl;
         cout<<"Chọn chức năng: "<<endl;
         cin>>luachon;
@@ -523,10 +551,15 @@ int main(){
         case 0:
         cout << "Thoat chuong trinh.\n";
         break;
+      case 7:
+        cout<<"\n============DOANH THU VE==============\n";
+        dsVe.doanhThu();
+        break;
         return 0 ;
     }
     }
     }
 
     
+
 
