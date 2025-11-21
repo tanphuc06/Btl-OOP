@@ -499,6 +499,41 @@ float tinhDoanhThuTuan(const string &ngayBatDau, const string &ngayKetThuc,const
     
     return tongDoanhThuTuan;
 }
+float tinhDoanhThuThang(const string &thang, const string &nam, const danhSachSuatChieu& dsXuatChieu)const{
+    float tongDoanhThuThang=0;
+    int soVe=0;
+    Node3* temp=head;
+    
+    cout<<"\n==============DOANH THU THANG " << thang << " NAM " << nam << "===============\n";
+    
+    while (temp!=NULL){
+        if(temp->data.getTrangThai()=="Da thanh toan"){
+            suatChieu*sc=dsXuatChieu.timSuatChieuTheoMa(temp->data.getMaSuatChieu());
+            if(sc!=NULL){
+                string ngayChieu=sc->getNgayChieu();
+                if (ngayChieu.length() >= 10) {
+                    string thangChieu=ngayChieu.substr(3, 2);
+                    string namChieu=ngayChieu.substr(6, 4);
+                    if (thangChieu == thang && namChieu == nam) {
+                        tongDoanhThuThang += sc->getGiaVe();
+                        soVe++;
+                        cout<<"  Ngay " << ngayChieu
+                            << " | Ve " << temp->data.getMaVe()
+                            << " | Gia: " << sc->getGiaVe() << " VND\n";
+                    }
+                }
+            }
+        }
+        temp=temp->next;
+    }
+    
+    cout<<"-----------------------------------------------------\n";
+    cout<<"Tong so ve ban duoc trong thang: " << soVe << " ve\n";
+    cout<<"Tong doanh thu trong thang la: " << tongDoanhThuThang << " VND\n";
+    cout<<"------------------------------------------------------\n";
+    
+    return tongDoanhThuThang;
+}
 void doanhThu(){
      int luachon;
       danhSachSuatChieu dsSC;
@@ -606,6 +641,7 @@ int main(){
     }
 
     
+
 
 
 
