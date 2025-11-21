@@ -440,12 +440,12 @@ void thanhToanVe(danhSachSuatChieu &dsSC){
         }
         return NULL;
     }
-float tinhDoanhThuNgay(const string &ngay, const danhSachSuatChieu &dsXuatChieu)const {
+float tinhDoanhThuNgay(const string &ngay, const string &thang, const string &nam, const danhSachSuatChieu &dsXuatChieu)const {
     float tongDoanhThuNgay=0;
     int soVe=0;
     Node3* temp=head;
     
-    cout<<"\n========== DOANH THU NGAY " << ngay << " ==========\n";
+    cout<<"\n========== DOANH THU NGAY " << ngay <<"/"<<thang<<"/" <<nam<<" ==========\n";
     
     while(temp!=NULL){
         if(temp->data.getTrangThai()=="Da thanh toan"){
@@ -485,6 +485,11 @@ void doanhThu(){
         case 1:
         	cout<<"Nhap ngay can xem doanh thu: ";
         	getline(cin, ngay);
+          cout<<"Nhap thang: ";
+        	getline(cin, thang);
+        	cout<<"Nhap nam: ";
+        	getline(cin, nam);
+        	dsVe.tinhDoanhThuNgay(ngay,thang, nam, dsSC);
         	break;
         case 2:
         	break;
@@ -561,5 +566,6 @@ int main(){
     }
 
     
+
 
 
